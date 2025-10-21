@@ -1,0 +1,40 @@
+class Solution {
+public:
+   
+        int digitExtractor(string &s,int i,long long res,int sign){
+        if(i>s.size() || !isdigit(s[i])){
+            return (int)(sign*res);
+        }
+        int digit=s[i]-'0';
+        res=res*10+digit;
+
+        if((sign*res)>=INT_MAX) return INT_MAX;
+        else if((sign*res)<=INT_MIN) return INT_MIN;
+
+        return digitExtractor(s,i+1,res,sign);
+    }
+
+
+    int myAtoi(string s) {
+        int n=s.size();
+        // skipping white spaces
+        int i=0;
+        while(i<n && s[i]==' ') i++;
+
+        // checking for the sign
+        int sign=1;
+        if(s[i]=='-'){
+            sign=-1;
+            i++;
+        }
+        else if(s[i]=='+'){
+            i++;
+        }
+
+        // digit extraction using recusrion
+        long long res=0;
+        return digitExtractor(s,i,res,sign);
+    }
+        
+    
+};
